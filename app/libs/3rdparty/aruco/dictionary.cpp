@@ -33,7 +33,7 @@ or implied, of Rafael Muñoz Salinas.
 #include <stdexcept>
 #include <vector>
 #include <bitset>
-#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/imgproc.hpp>
 #include "markermap.h"
 #include <set>
 #include <stdexcept>
@@ -359,15 +359,20 @@ Dictionary::DICT_TYPES Dictionary::getTypeFromString(std::string str)   {
     if (str=="TAG36h11") return TAG36h11;
     if (str=="TAG36h10") return TAG36h10;
     if (str=="CHILITAGS") return CHILITAGS;
+    if (str=="CUSTOM") return CUSTOM;
     if (str=="ALL_DICTS") return ALL_DICTS;
-    else  return CUSTOM;
 
-//    throw cv::Exception(9001, "Invalid string <"+str+"> to convert to Dictionary type", "Dictionary::getTypeFromString", __FILE__, __LINE__);
+    throw cv::Exception(9001, "Invalid string <"+str+"> to convert to Dictionary type", "Dictionary::getTypeFromString", __FILE__, __LINE__);
 
  }
 
 bool Dictionary::isPredefinedDictinaryString(string str)  {
-       return getTypeFromString(str)!=CUSTOM;
+    try{
+        getTypeFromString(str);
+        return true;
+    } catch(std::exception &){
+        return false;
+    }
 }
 
 vector<std::string> Dictionary::getDicTypes() {

@@ -31,7 +31,7 @@ or implied, of Rafael Muñoz Salinas.
 #define _ARUCO_MarkerDetector_H
 
 #include "aruco_export.h"
-#include <opencv2/core/core.hpp>
+#include <opencv2/core.hpp>
 #include <cstdio>
 #include <iostream>
 #include <queue>
