@@ -1,8 +1,17 @@
-# Sets the minimum version of CMake required to build the native library.
+
+# Sets the minimum version of CMake required to build the native
+# library. You should either keep the default value or only pass a
+# value of 3.4.0 or lower.
+
 cmake_minimum_required(VERSION 3.4.1)
 
+# OpenCV stuff
+include_directories(/home/alantavares/OpenCV-Android/OpenCV-3.4.1-android-sdk/sdk/native/jni/include)
+add_library( lib_opencv SHARED IMPORTED )
+set_target_properties(lib_opencv PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libopencv_java3.so)
 
-# Gradle automatically packages shared libraries with your APK.
+
+
 add_library( # Sets the name of the library.
              native-lib
 
@@ -10,21 +19,20 @@ add_library( # Sets the name of the library.
              SHARED
 
              # Provides a relative path to your source file(s).
+             # Associated headers in the same location as their source
+             # file are automatically included.
              src/main/cpp/native-lib.cpp )
 
-# Searches for a specified prebuilt library and stores the path as a
-find_library( # Sets the name of the path variable.
-              log-lib
 
-              # Specifies the name of the NDK library that
-              # you want CMake to locate.
-              log )
+find_library( log-lib log )
 
-# Specifies libraries CMake should link to your target library. You
-# can link multiple libraries, such as libraries you define in this
-# build script, prebuilt third-party libraries, or system libraries.
+
+
 target_link_libraries( # Specifies the target library.
                        native-lib
+
+                       # OpenCV lib
+                       lib_opencv
 
                        # Links the target library to the log library
                        # included in the NDK.
