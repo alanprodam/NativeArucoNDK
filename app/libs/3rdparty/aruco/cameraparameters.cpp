@@ -27,8 +27,8 @@ or implied, of Rafael Muñoz Salinas.
 */
 #include "cameraparameters.h"
 
-#include <opencv2/calib3d.hpp>
-#include <opencv2/core.hpp>
+#include <opencv2/calib3d/calib3d.hpp>
+#include <opencv2/core/core.hpp>
 
 #include <fstream>
 #include <iostream>
@@ -559,7 +559,7 @@ namespace aruco
 
         cp.CameraMatrix=cv::Mat::eye(3,3,CV_32F);
         cp.Distorsion.create(1,5,CV_32F);
-        cp.Distorsion=0;
+        cp.Distorsion.setTo(cv::Scalar::all(0));
         string line;
         std::getline(str,line);
         if (line.find("%YAML:1.0")==string::npos){

@@ -14,12 +14,17 @@ import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
 public class MainActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
 
     private static final String TAG = "OCVSample::Activity";
+    private static final String JNITAG = "JNIArucoTestActivity";
+
     private CameraBridgeViewBase _cameraBridgeViewBase;
+
+    //Mat mRgba;
 
     private BaseLoaderCallback _baseLoaderCallback = new BaseLoaderCallback(this) {
         @Override
@@ -105,16 +110,22 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     }
 
     public void onCameraViewStarted(int width, int height) {
+        //mRgba = new Mat(height, width, CvType.CV_8UC4);
     }
 
     public void onCameraViewStopped() {
     }
 
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
-        Mat matGray = inputFrame.gray();
-        salt(matGray.getNativeObjAddr(), 2000);
-        return matGray;
+        Mat mRgba = inputFrame.rgba();
+
+        Log.d(TAG,"Image onCameraFrame");
+        arucoSimple(inputFrame.gray().getNativeObjAddr(), mRgba.getNativeObjAddr());
+        Log.d(JNITAG,jniGetLog());
+
+        return mRgba;
     }
 
-    public native void salt(long matAddrGray, int nbrElem);
+    public native void arucoSimple(long imgGray, long imgColor);
+    public native String jniGetLog();
 }

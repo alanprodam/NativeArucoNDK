@@ -32,10 +32,10 @@ or implied, of Rafael Muñoz Salinas.
 #include <math.h>
 #include <string>
 #include <fstream>
-#include <opencv2/core.hpp>
+#include <opencv2/core/core.hpp>
 
-#include <opencv2/imgproc.hpp>
-#include <opencv2/ml.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/ml/ml.hpp>
 #include <iostream>
 
 using namespace std;

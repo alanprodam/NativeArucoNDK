@@ -25,14 +25,40 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Rafael Muñoz Salinas.
 */
-#include <opencv2/calib3d.hpp>
-#include <opencv2/imgproc.hpp>
+#include <opencv2/calib3d/calib3d.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 #include "cvdrawingutils.h"
 #include "cameraparameters.h"
 using namespace cv;
 namespace aruco
 {
+void CvDrawingUtils::draw3dAxis(cv::Mat& Image, const CameraParameters& CP, const cv::Mat& Rvec,
+                                   const cv::Mat& Tvec, float axis_size)
+   {
+       Mat objectPoints(4, 3, CV_32FC1);
+       objectPoints.at<float>(0, 0) = 0;
+       objectPoints.at<float>(0, 1) = 0;
+       objectPoints.at<float>(0, 2) = 0;
+       objectPoints.at<float>(1, 0) = axis_size;
+       objectPoints.at<float>(1, 1) = 0;
+       objectPoints.at<float>(1, 2) = 0;
+       objectPoints.at<float>(2, 0) = 0;
+       objectPoints.at<float>(2, 1) = axis_size;
+       objectPoints.at<float>(2, 2) = 0;
+       objectPoints.at<float>(3, 0) = 0;
+       objectPoints.at<float>(3, 1) = 0;
+       objectPoints.at<float>(3, 2) = axis_size;
 
+       std::vector<Point2f> imagePoints;
+       cv::projectPoints(objectPoints, Rvec, Tvec, CP.CameraMatrix, CP.Distorsion, imagePoints);
+       // draw lines of different colours
+       cv::line(Image, imagePoints[0], imagePoints[1], Scalar(0, 0, 255, 255), 1, CV_AA);
+       cv::line(Image, imagePoints[0], imagePoints[2], Scalar(0, 255, 0, 255), 1, CV_AA);
+       cv::line(Image, imagePoints[0], imagePoints[3], Scalar(255, 0, 0, 255), 1, CV_AA);
+       putText(Image, "x", imagePoints[1], FONT_HERSHEY_SIMPLEX, 0.6, Scalar(0, 0, 255, 255), 2);
+       putText(Image, "y", imagePoints[2], FONT_HERSHEY_SIMPLEX, 0.6, Scalar(0, 255, 0, 255), 2);
+       putText(Image, "z", imagePoints[3], FONT_HERSHEY_SIMPLEX, 0.6, Scalar(255, 0, 0, 255), 2);
+   }
     /****
      *
      *

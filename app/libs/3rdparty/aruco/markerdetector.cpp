@@ -31,9 +31,9 @@ or implied, of Rafael Muñoz Salinas.
 #include "markerlabeler.h"
 #include "timers.h"
 
-#include <opencv2/core.hpp>
-#include <opencv2/imgproc.hpp>
-#include <opencv2/calib3d.hpp>
+#include <opencv2/core/core.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/calib3d/calib3d.hpp>
 #include <fstream>
 #include <iostream>
 #include <valarray>
@@ -760,9 +760,6 @@ void MarkerDetector::detect(const cv::Mat& input, vector<Marker>& detectedMarker
     }
 Timer.add("Corner Refinement");
 
-
-
-
 //    auto setPrecision=[](double f, double prec){
 //        int x=roundf(f*prec);
 //        return  double(x)/prec;
@@ -1199,6 +1196,9 @@ void MarkerDetector::setDictionary(int dict_type,
     _params.error_correction_rate=error_correction_rate;
     _params.dictionary=aruco::Dictionary::getTypeString((Dictionary::DICT_TYPES)dict_type);
 }
+
+
+
 
 void MarkerDetector::setDictionary(string dict_type, float error_correction_rate)
 {

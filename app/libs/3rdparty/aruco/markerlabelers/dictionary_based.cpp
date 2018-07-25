@@ -32,7 +32,6 @@ or implied, of Rafael Muñoz Salinas.
 
 #include <bitset>
 #include <cmath>
-#include <opencv2/highgui.hpp>//TOREMOVE
 
 namespace aruco
 {
