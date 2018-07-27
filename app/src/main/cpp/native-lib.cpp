@@ -59,7 +59,7 @@ Java_unicamp_alantavares_nativearucondk_MainActivity_jniGetLog(JNIEnv *env, jobj
 }
 }
 
-namespace Java_uco_ava_core_ArucoTestActivity{
+namespace Java_unicamp_alantavares_nativearucondk_MainActivity{
 
     std::string ConvertJString(JNIEnv* env, jstring str)
     {
